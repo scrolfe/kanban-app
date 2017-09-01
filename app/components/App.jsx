@@ -2,10 +2,6 @@ import React from 'react';
 import uuid from 'uuid';
 import Notes from './Notes';
 
-const notes = [
-
-]
-
 export default class App extends React.Component {
   constructor(props){
     super(props);
@@ -29,6 +25,8 @@ export default class App extends React.Component {
         <button onClick={this.addNote}>+</button>
         <Notes
           notes={notes}
+          onNoteClick={this.activateNoteEdit}
+          onEdit={this.editNote}
           onDelete={this.deleteNote}
         />
       </div>
@@ -41,6 +39,31 @@ export default class App extends React.Component {
         id: uuid.v4(),
         task: 'New Task'
       }])
+    });
+  }
+
+  activateNoteEdit = (id) => {
+    this.setState({
+      notes: this.state.notes.map(note => {
+        if(note.id === id) {
+          note.editing = true;
+        }
+
+        return note;
+      })
+    })
+  }
+
+  editNote = (id, task) => {
+    this.setState({
+      notes: this.state.notes.map(note => {
+        if (note.id === id) {
+          note.editing = false;
+          note.task = task;
+        }
+
+        return note;
+      })
     });
   }
 
