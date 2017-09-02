@@ -28,6 +28,6 @@ export default compose(
   DragDropContext(HTML5Backend),
   connect(
     ({lanes}) => ({lanes}),
-    LaneActions
+    {LaneActions}
   )
 )(App)
