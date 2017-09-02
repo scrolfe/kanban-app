@@ -6,10 +6,12 @@ import ItemTypes from '../constants/itemTypes';
 const Note = ({
   connectDragSource, connectDropTarget,
   isDragging, isOver,
-  onMove, id,
+  onMove, id, editing,
   children, ...props
 }) => {
-  return compose(connectDragSource, connectDropTarget)(
+  const dragSource = editing ? a => a : connectDragSource;
+
+  return compose(dragSource, connectDropTarget)(
     <div
       style={{opacity: isDragging || isOver ? 0 : 1}}
       {...props}>
@@ -17,6 +19,7 @@ const Note = ({
     </div>
   );
 };
+
 
 const noteSource = {
   beginDrag(props) {
