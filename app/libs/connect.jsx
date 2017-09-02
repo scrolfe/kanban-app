@@ -10,6 +10,7 @@ export default (state, actions) => {
     <target {...Object.assign({}, props, actions)} />
   );
 }
+
 function connect(state = () => {}, actions = {}, target) {
   class Connect extends React.Component {
 
@@ -24,6 +25,7 @@ function connect(state = () => {}, actions = {}, target) {
 
       flux.FinalStore.unlisten(this.handleChange);
     }
+
     render() {
       const {flux} = this.context;
       const stores = flux.stores;
@@ -35,5 +37,27 @@ function connect(state = () => {}, actions = {}, target) {
         )}
       );
     }
+
+    handleChange = () => {
+      this.forceUpdate();
+    }
   }
+
+  Connect.contextTypes = {
+    flux: React.PropTypes.object.isRequired
+  }
+
+  return Connect;
+}
+
+function composeStores(stores) {
+  let ret = {};
+
+  Object.keys(stores).forEach(k => {
+    const store = stores[k];
+
+    ret = Object.assign({}, ret, store.getState());
+  })
+
+  return ret;
 }
