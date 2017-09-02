@@ -6,16 +6,7 @@ export default class NoteStore {
 
     this.bindActions(NoteActions);
 
-    this.notes = [
-      {
-        id: uuid.v4(),
-        task: 'Learn React'
-      },
-      {
-        id: uuid.v4(),
-        task: 'Do Laundry'
-      }
-    ];
+    this.notes = [];
   }
 
   create(note) {
